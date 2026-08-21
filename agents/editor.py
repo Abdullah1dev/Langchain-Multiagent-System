@@ -1,13 +1,20 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
+import os
+from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
+
 from prompts.editor_prompt import EDITOR_SYSTEM_PROMPT
+
+load_dotenv()
 
 
 class EditorAgent:
 
     def __init__(self):
-        self.llm = ChatGoogleGenerativeAI(
-            model="gemini-2.0-flash",
-            temperature=0.3
+        self.llm = ChatOpenAI(
+            model="openrouter/free",
+            temperature=0.3,
+            api_key=os.getenv("OPENROUTER_API_KEY"),
+            base_url="https://openrouter.ai/api/v1"
         )
 
     def edit(self, draft: str) -> str:
